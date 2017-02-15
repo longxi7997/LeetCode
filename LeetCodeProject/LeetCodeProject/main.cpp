@@ -1,7 +1,7 @@
 // Source : https://github.com/longxi7997/LeetCode/Algorithm/cpp/1_TwoSum
 // Author : Xi Long
 // Email  : longxi7997@gmail.com
-// Date   : 2017-01-15
+// Date   : 2017-02-15
 
 /**********************************************************************************
 *
@@ -16,41 +16,70 @@
 *
 *	return [0, 1].
 *
+*Descripton:  use array to save the status,
+*             but if the MAXN is too large, it will Exeed Memory Limit
+*             time:n, memory: MAXN
 *
 **********************************************************************************/
 
 #include <stdio.h>
 #include <iostream>
 #include <vector>
-#include <set>
-#include <algorithm>
 using namespace std;
 
-class solution {
+const int N = 200002;
+const int OFFSET = 100000;
+
+class Solution
+{
+
+private:
+
+	int idOfNum[N];
 
 public:
-	vector<int> TwoSum ( vector<int> &numbers , int target ) {
+	vector<int> twoSum ( vector<int> &numbers , int target ) {
+		
 		int array_size_ = numbers.size ( );
+		
 		vector<int> result_index_;
 
-		for ( int i = 0; i < array_size_; i++ ) {
-			for ( int j = 0; j < array_size_; j++ ) {
+		memset(idOfNum, 0, sizeof(idOfNum));
 
-				if ( numbers [ i ] + numbers [ j ] == target ) {
-					result_index_.push_back ( i + 1 );
-					result_index_.push_back ( j + 1 );
-					return result_index_;
-				}
+		for ( int i = 0; i < array_size_; i++ )
+		{
+			int rest_ = target - numbers[i];
+
+			if ( idOfNum[ rest_ + OFFSET ] )
+			{
+				result_index_.push_back(idOfNum[rest_ + OFFSET] -1 );
+				result_index_.push_back( i );
+				return result_index_;
 			}
+
+			idOfNum[numbers[i] + OFFSET] = i + 1 ;
 		}
 	}
 };
 
-vector<int>  main ( )
+int main ( )
 {
-	vector<int> result;
+	vector<int> mresult;
+
+	Solution m_solution;
+
+	int x[ ] = { 3,3 };
+	vector<int> m_Input( std::begin(x) , std::end(x)  );
+
+	int target = 6;
+
+	mresult = m_solution.twoSum ( m_Input , target );
 
 
-
-	return result;
+	cout << mresult [ 0 ] <<endl ;
+	cout << mresult [ 1 ] <<endl;
+	
+	system ( "pause" );
+	return 0;
+	
 }
