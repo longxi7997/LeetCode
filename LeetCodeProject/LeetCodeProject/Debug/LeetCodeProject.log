@@ -1,4 +1,3 @@
 ﻿  main.cpp
-c:\users\xi\desktop\leetcode\leetcodeproject\leetcodeproject\main.cpp(62): warning C4715: “Solution::twoSum”: 不是所有的控件路径都返回值
   LeetCodeProject.vcxproj -> C:\Users\xi\Desktop\LeetCode\LeetCodeProject\Debug\LeetCodeProject.exe
   LeetCodeProject.vcxproj -> C:\Users\xi\Desktop\LeetCode\LeetCodeProject\Debug\LeetCodeProject.pdb (Partial PDB)
