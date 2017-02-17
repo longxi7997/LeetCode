@@ -1,7 +1,7 @@
 // Source : https://github.com/longxi7997/LeetCode/Algorithm/cpp/1_TwoSum
 // Author : Xi Long
 // Email  : longxi7997@gmail.com
-// Date   : 2017-02-16
+// Date   : 2017-02-17
 
 /**********************************************************************************
 *
@@ -16,50 +16,63 @@
 *
 *	return [0, 1].
 *
-*Descripton:  Save with map.
-*             time:nlogn, memory:nlogn
+*Descripton:  sort and find the answer with two points
 *
 **********************************************************************************/
 
 #include <stdio.h>
 #include <iostream>
 #include <vector>
-#include <map>
+#include<algorithm>
 using namespace std;
 
 
+const int N = 0;
 
 class Solution
 {
 
-private:
-
-	map<int, int > idOfNum;
-
 public:
 	vector<int> twoSum ( vector<int> &numbers , int target ) {
-		
-		idOfNum.clear();
 
 		int array_size_ = numbers.size ( );
+		int left_ = 0, right_ = array_size_ - 1, sum_ = 0;
+
+
 		vector<int> result_index_;
 
+		vector<int> sorted_(numbers);
+		std::sort(sorted_.begin(), sorted_.end());
 
-
-		for ( int i = 0; i < array_size_; i++ )
+		while ( left_ < right_ )
 		{
-			int rest_ = target - numbers[i];
-
-			if ( idOfNum.find(rest_) != idOfNum.end()  )
+			sum_ = sorted_[left_] + sorted_[right_];
+			
+			if (sum_ == target)
 			{
-				result_index_.push_back(idOfNum[rest_] );
-				result_index_.push_back( i );
-				return result_index_;
-			}
+				for (int i = 0 ; i < array_size_ ; i++)
+				{
+					if (numbers[i] == sorted_[left_])
+						result_index_.push_back(i);
+					else if (numbers[i] == sorted_[right_])
+						result_index_.push_back(i);
 
-			idOfNum[numbers[i] ] = i ;
+					if (result_index_.size() == 2)
+						return result_index_;
+				}
+
+			}
+			else if (sum_ > target)
+			{
+				right_--;
+			}
+			else
+			{
+				left_++;
+			}
 		}
 	}
+
 };
 
 int main ( )
@@ -68,10 +81,10 @@ int main ( )
 
 	Solution m_solution;
 
-	int x[ ] = { 3,2,4 };
+	int x[ ] = { 2,5,5,11 };
 	vector<int> m_Input( std::begin(x) , std::end(x)  );
 
-	int target = 6;
+	int target = 10;
 
 	mresult = m_solution.twoSum ( m_Input , target );
 
