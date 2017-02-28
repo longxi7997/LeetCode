@@ -23,9 +23,9 @@
 *	Output: "bb"
 *
 * Description:
-*	DP: 
+*	Expand Aroud  Center: 
 *		time  : O(n^2)  
-*		space : O(n^2)
+*		space : O(1)
 *
 **********************************************************************************/
 
@@ -44,32 +44,47 @@ public:
 	string longestPalindrome(string s) {
 
 		const int len = s.length();
-		if (len <= 1) return s;
-		vector<vector<int> > dp(len, vector<int>(len));   //dp[i][j]表示s[i..j]是否是回文
 
+		int start = 0 , maxLen = 0;
 
-		int resLeft = 0, resRight = 0;
-		
-		for( int k=1 ; k<= len ; k++)
+		for ( int i=0 ; i<len ; i++ )
 		{
-			for ( int i=0 ; i<=len-k ; i++ )
+			// 以 i 为中心 的 偶数长度 回文
+			int low = i, high = i + 1;
+			while (low >= 0 && high < len && s[low] == s[high])
 			{
-				if ( k>3? (s[i] == s[i + k - 1] && dp[i + 1][i + k - 2]):(s[i] == s[i + k - 1]) )
+			
+				if (high - low + 1 > maxLen)
 				{
-
-					dp[i][i + k - 1] = true;
-					
-					if (resRight - resLeft + 1 < k)
-					{
-						resLeft = i;
-						resRight = i + k - 1;
-					}
+					maxLen = high - low + 1;
+					start = low;
 				}
+				low--; 
+				high++;
+				
 			}
+			
+
+			// 以 i 为中心 的 奇数长度 回文
+			low = i-1, high = i + 1;
+			while (low >= 0 && high < len && s[low] == s[high])
+			{
+				if (high - low + 1 > maxLen)
+				{
+					maxLen = high - low + 1;
+					start = low;
+				}
+				low--;
+				high++;
+				
+			}
+
 		}
 
-
-		return s.substr(resLeft,resRight-resLeft+1);
+		if (maxLen == 0)
+			return s.substr( 0,1);
+		else
+			return s.substr( start , maxLen );
 
 
 	}
@@ -79,8 +94,7 @@ int main()
 {
 	Solution m_solution;
 
-	//string s = "dqlvtrcystnncxjffjrkiiqgtcunbwntqrpqkjepzbxzodeckrbrwzjjuptloypmjgbwioqtjzjjgqpaemgvxkapjgbfhhwltvtqgkozuzvlwetftjeocjqrdwlhdwtgzdhwvmuhvmdpkxnzrrizjntxbbpzwtjryecgfajolalwdzxqtknvvvaxuhanzowlbwjraigvrflcqoormbeexekmqpmuuobseumctsiwhvdohywjaylixqgqookgneokebtmoyaspnzbwqzffyocvcylcjobnzbmhsdprzrgdlyzuutyuwygzeldfewicjnukguisceeopckkoviayrcqanzsryhwqhxjxcpiejojztrxad";
-	string s = "abba";
+	string s = "dqlvtrcystnncxjffjrkiiqgtcunbwntqrpqkjepzbxzodeckrbrwzjjuptloypmjgbwioqtjzjjgqpaemgvxkapjgbfhhwltvtqgkozuzvlwetftjeocjqrdwlhdwtgzdhwvmuhvmdpkxnzrrizjntxbbpzwtjryecgfajolalwdzxqtknvvvaxuhanzowlbwjraigvrflcqoormbeexekmqpmuuobseumctsiwhvdohywjaylixqgqookgneokebtmoyaspnzbwqzffyocvcylcjobnzbmhsdprzrgdlyzuutyuwygzeldfewicjnukguisceeopckkoviayrcqanzsryhwqhxjxcpiejojztrxad";
 
 	string result = m_solution.longestPalindrome(s);
 
