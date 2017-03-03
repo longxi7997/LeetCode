@@ -1,23 +1,17 @@
 ﻿// Source : https://github.com/longxi7997/LeetCode
 // Author : Xi Long
 // Email  : longxi7997@gmail.com
-// Date   : 2017-03-02
+// Date   : 2017-03-03
 
 /**********************************************************************************
-* The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: 
-* (you may want to display this pattern in a fixed font for better legibility)
+* Reverse digits of an integer.
 *
-* P   A   H   N
-* A P L S I I G
-* Y   I   R
+* Example1: x = 123, return 321
 * 
-*
-* convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
-* Example 1:
-*
-*	Input: "PAYPALISHIRING , 3"
-*
-*	Output: "PAHNAPLSIIGYIR"
+* Example2: x = -123, return -321
+* 
+* Note:
+* The input is assumed to be a 32-bit signed integer. Your function should return 0 when the reversed integer overflows.
 *
 * Description:
 *	simulation:
@@ -33,37 +27,26 @@
 #include <string>
 using namespace std;
 
-
 class Solution
 {
 public:
-	string convert(string s, int numRows) {
+	int reverse(int x) {
 
-		if (numRows == 1) return s ;
-
-		int len = s.length();
-		int step = numRows * 2 - 2;
-
-		string ret = "";
-		for (int i = 0; i < len ; i+= step )
+		long long int ret = 0;
+		long long int tmp = abs((long long)x);
+		while (tmp !=0 )
 		{
-			ret += s[i];
-		}
-		
-		for (int i = 1; i < numRows - 1; i++)
-		{
-			for (int j = i; j < len; j += step)
-			{
-				ret += s[j];
-				if (j + (step - i * 2) < len)
-					ret += s[j + (step - i * 2)];
-			}
+			int remainder = (long)tmp % 10;
+			
+			ret = ret * 10 + remainder;
+
+			if (ret > INT_MAX || ret < INT_MIN)
+				return 0;
+
+			tmp = tmp / 10;
 		}
 
-		for (int i = numRows - 1; i < len; i += step)
-			ret += s[i];
-		
-		return ret;
+		return x>0?ret:-ret;
 
 	}
 };
@@ -72,9 +55,11 @@ int main()
 {
 	Solution m_solution;
 
-	string s = "PAYPALISHIRING";
+	int s = 0;
 	
-	string result = m_solution.convert(s , 3 );
+	//int s = -2;
+
+	int result = m_solution.reverse(s );
 
 	cout << result  << endl ;
 
