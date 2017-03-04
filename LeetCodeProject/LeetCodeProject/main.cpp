@@ -4,14 +4,16 @@
 // Date   : 2017-03-03
 
 /**********************************************************************************
-* Reverse digits of an integer.
+* Implement atoi to convert a string to an integer.
 *
-* Example1: x = 123, return 321
 * 
-* Example2: x = -123, return -321
+* Hint:
+		Carefully consider all possible input cases. 
+*		If you want a challenge, please do not see below and ask yourself what are the possible input cases.
 * 
 * Note:
-* The input is assumed to be a 32-bit signed integer. Your function should return 0 when the reversed integer overflows.
+*		It is intended for this problem to be specified vaguely (ie, no given input specs). 
+*		You are responsible to gather all the input requirements up front.
 *
 * Description:
 *	simulation:
@@ -27,39 +29,84 @@
 #include <string>
 using namespace std;
 
+
 class Solution
 {
 public:
-	int reverse(int x) {
+	int myAtoi(string str) {
 
-		long long int ret = 0;
-		long long int tmp = abs((long long)x);
-		while (tmp !=0 )
+		// 去掉空格
+		
+		int i = 0;
+		int len = str.length();
+		int sign = 1; 
+		int ret = 0;   // Solution 2:  long long int 
+		while ( i<len && str[i]==' ')
 		{
-			int remainder = (long)tmp % 10;
-			
-			ret = ret * 10 + remainder;
+			i++;
+		}
+		if (i == len) return 0;
 
-			if (ret > INT_MAX || ret < INT_MIN)
+		if ( str[i] == '-')
+		{
+			sign = -1;
+			i++;
+		}
+		else if ( str[i]== '+')
+		{
+			i++;
+		}
+		
+		while ( i<len)
+		{
+			if ( !isdigit(str[i]) )
+			{
+				break;
+			}
+
+			if ( sign ==1  && (ret >( INT_MAX- (str[i]-'0'))/10 ) )
+			{
+				return INT_MAX;
+			}
+
+			int a = (INT_MIN + (str[i] - '0')) / 10 ;
+			if (sign==-1 && ( -ret < ( INT_MIN + (str[i]-'0') )/10 ) )
+			{
+				return INT_MIN;
+			}
+			ret = ret * 10 + (str[i] - '0');
+
+
+			/*if ( sign>0 && ret>INT_MAX)
+			{
+				return INT_MAX;
+			}
+			if ( sign<0 && ret*sign < INT_MIN)
+			{
+				return INT_MIN;
+			}*/
+			/*if (((sign > 0) ? (ret>INT_MAX) : (ret > (long long)INT_MAX + 1)) )
+			{
 				return 0;
-
-			tmp = tmp / 10;
+			}*/
+			i++;
 		}
 
-		return x>0?ret:-ret;
 
+		return sign*ret;
+		
 	}
 };
+
 
 int main()
 {
 	Solution m_solution;
 
-	int s = 0;
+	string s = "2147483647";
 	
-	//int s = -2;
 
-	int result = m_solution.reverse(s );
+	int result = m_solution.myAtoi( s );
 
 	cout << result  << endl ;
 
