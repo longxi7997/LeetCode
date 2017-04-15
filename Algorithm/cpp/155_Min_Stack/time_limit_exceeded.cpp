@@ -36,7 +36,6 @@ public:
 	struct MyStruct
 	{
 		int value;
-		int m_min;
 		MyStruct *next;
 		MyStruct *pre;
 	};
@@ -45,12 +44,14 @@ public:
 	MyStruct *m_tail;
 	int m_count;
 
+	int m_min;
 
 	MinStack() {
 
 		m_head = NULL;
 		m_tail = NULL;
 		m_count = 0;
+		m_min = INT_MAX;
 	}
 
 	void push(int x) {
@@ -60,14 +61,14 @@ public:
 		m_temp->value = x;
 		m_temp->next = NULL;
 
+		if (m_temp->value < m_min)
+			m_min = m_temp->value;
 
 		if ( m_count == 0)
 		{
-
 			m_head = new MyStruct;
 			m_tail = new MyStruct;
 
-			m_temp->m_min = m_temp->value;
 			m_temp->pre = NULL;
 			m_head = m_temp;
 			m_tail = m_temp;
@@ -75,14 +76,6 @@ public:
 		}
 		else
 		{
-			if (  m_tail->m_min <= m_temp->value )
-			{
-				m_temp->m_min = m_tail->m_min;
-			}
-			else
-			{
-				m_temp->m_min = m_temp->value;
-			}
 			m_temp->pre = m_tail;
 			m_tail->next = m_temp;
 			m_tail = m_temp;
@@ -98,10 +91,24 @@ public:
 		{
 			MyStruct *m_temp = m_tail;
 
+			if ( m_temp->value == m_min  )
+			{
+				m_min = INT_MAX;
+				m_temp = m_temp->pre;
+				while ( m_temp != NULL  )
+				{
+					if (m_temp->value < m_min)
+						m_min = m_temp->value;
+				}
+			}
+
+			m_temp = m_tail;
+
 			m_tail = m_tail->pre;
 			m_tail->next = NULL;
 
 			delete m_temp;
+
 
 			m_count--;
 
@@ -112,6 +119,7 @@ public:
 			m_head = NULL;
 			m_tail = NULL;
 			m_count--;
+			m_min = INT_MAX;
 		}
 	}
 
@@ -122,7 +130,19 @@ public:
 
 	int getMin() {
 
-		return m_tail->m_min;
+		/*int m_min = INT_MAX;
+
+		MyStruct *m_temp = m_head;
+
+		while ( m_temp != NULL )
+		{
+			if (m_temp->value < m_min)
+				m_min = m_temp->value;
+
+			m_temp = m_temp->next;
+		}*/
+
+		return m_min;
 	}
 };
 
