@@ -1,3 +1,5 @@
 ﻿  main.cpp
-  LeetCodeProject.vcxproj -> C:\Users\xi\Desktop\LeetCode\LeetCodeProject\Debug\LeetCodeProject.exe
-  LeetCodeProject.vcxproj -> C:\Users\xi\Desktop\LeetCode\LeetCodeProject\Debug\LeetCodeProject.pdb (Partial PDB)
+c:\users\xi long\desktop\leetcode\leetcodeproject\leetcodeproject\main.cpp(107): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\xi long\desktop\leetcode\leetcodeproject\leetcodeproject\main.cpp(109): warning C4018: “<”: 有符号/无符号不匹配
+  LeetCodeProject.vcxproj -> C:\Users\Xi Long\Desktop\LeetCode\LeetCodeProject\Debug\LeetCodeProject.exe
+  LeetCodeProject.vcxproj -> C:\Users\Xi Long\Desktop\LeetCode\LeetCodeProject\Debug\LeetCodeProject.pdb (Partial PDB)
