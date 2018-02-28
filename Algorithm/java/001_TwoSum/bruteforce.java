@@ -4,7 +4,7 @@ import java.lang.System.*;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-// Source : https://github.com/longxi7997/LeetCode/Algorithm/cpp/1_TwoSum
+// Source : https://github.com/longxi7997/LeetCode/Algorithm/java
 // Author : Xi Long
 // Email  : longxi7997@gmail.com
 // Date   : 2018-02-28
@@ -22,7 +22,10 @@ import java.util.Arrays;
 *
 *	return [0, 1].
 * 
-* 暴力解法   时间复杂度O(n^2)
+* 
+* Description:
+* 	
+* 	time : O(m^2)
 *
 **********************************************************************************/
 
